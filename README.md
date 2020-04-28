@@ -14,7 +14,6 @@ Usage
 helm install nginx-ingress \
     stable/nginx-ingress \
     --set defaultBackend.image.repository=cinaq/default-backend \
-    --set defaultBackend.image.tag=1.0 \
-    --set defaultBackend.port=80
+    --set defaultBackend.image.tag=1.0
 ```
 
