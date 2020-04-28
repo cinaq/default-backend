@@ -3,7 +3,7 @@ default-backend
 
 A better looking 404 error page for use with nginx-ingress:
 
-![Screenshot](screenshot.png)
+![Screenshot](https://github.com/cinaq/default-backend/raw/master/screenshot.png)
 
 Feel free to fork this.
 
