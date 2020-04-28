@@ -17,3 +17,9 @@ helm install nginx-ingress \
     --set defaultBackend.image.tag=1.1
 ```
 
+References
+===
+
+* https://github.com/liangxingchen/docker-k8s/tree/master/defaultbackend-amd64/2.0
+* https://codepen.io/ricardpriet/pen/qVZxNo
+

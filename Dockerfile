@@ -1,21 +1,17 @@
-FROM nginx:alpine
+FROM golang:1.10.3 as builder
 
-# Remove default NGINX Config
-# Take care of Nginx logging
-RUN rm /etc/nginx/conf.d/default.conf && \
-    ln -sf /dev/stdout /var/log/nginx/access.log && \
-    ln -sf /dev/stderr /var/log/nginx/error.log
+COPY index.html /build/dist/
+COPY 404.png /build/dist/
+COPY server.go /build/
 
-# required permissions
-RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
-    chmod -R 770 /var/cache/nginx /var/run /var/log/nginx
+WORKDIR /build
 
-# NGINX Config
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOARM=6 go build -ldflags '-w -s' -o dist/server
 
-# Resources
-COPY html/ /var/www/html/
+FROM scratch
 
-EXPOSE 8080
+COPY --from=builder /build/dist/* /
 
-CMD ["nginx", "-g", "daemon off;"]
+USER 65534:65534
+
+ENTRYPOINT ["/server"]
